@@ -1,0 +1,7 @@
+E:\控制台测试\WcfService1\bin\WcfService1.dll.config
+E:\控制台测试\WcfService1\bin\WcfService1.dll
+E:\控制台测试\WcfService1\bin\WcfService1.pdb
+E:\控制台测试\WcfService1\obj\Debug\WcfService1.csproj.CoreCompileInputs.cache
+E:\控制台测试\WcfService1\obj\Debug\WcfService1.dll
+E:\控制台测试\WcfService1\obj\Debug\WcfService1.pdb
+E:\控制台测试\WcfService1\obj\Debug\WcfService1.csproj.AssemblyReference.cache
