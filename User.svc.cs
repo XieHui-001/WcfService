@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Data.SqlClient;
-using System.Data.Sql;
 using System.Data;
 
 namespace WcfService1
@@ -15,6 +14,7 @@ namespace WcfService1
     public class User : IUser
     {
         SqlConnection strCon = new SqlConnection("server=DESKTOP-3N5JSFQ;database=Test;uid=sa;pwd=323402171");
+        private bool isTure = false;
         public string DoWork(int a,int b)
         {
             string valueinfo = string.Empty;
@@ -28,6 +28,8 @@ namespace WcfService1
             }
             return valueinfo;
         }
+
+
         // 开启数据库
         public void openSql() {
             strCon.Open();
@@ -38,34 +40,32 @@ namespace WcfService1
         }
 
         public string Login(string name, string pwd) {
-            bool isTure = false;
-            if (querysql(name, pwd))
-            {
-                isTure = true;
-            }
-            return isTure == true ? "登录名称：" + name + "密码:" + pwd : "登录失败";
+            return querysql(name, pwd) ? "登录名称：" + name + "密码:" + pwd : "登录失败";
         }
 
         public bool querysql(string name,string password) {
-            bool isTure = false;
             try
             {
                 openSql();
-                string sql = "select * from LoginTable where Name='"+ name + "' and Password='"+password+"'";
-                DataSet da = new DataSet();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, strCon);
-                sqlDataAdapter.Fill(da);
-                isTure = true;
+                string sql = "select * from LoginTable where Name='"+ name + "' and Password='"+ password +"'";
+                DataSet ds = new DataSet();
+                SqlDataAdapter s = new SqlDataAdapter(sql, strCon);
+                s.Fill(ds);
+                DataTable tbl = ds.Tables[0];
+                DataRow row = tbl.Rows[0];
+                if (!row.HasErrors) {
+                    isTure = true;
+                }
+                return isTure;
             }
             catch (Exception ex)
             {
-                throw ex;
-                isTure = false;
+                return false;
+                //throw ex;
             }
             finally {
                 CloseSql();
             }
-            return isTure;
         }
     }
 }
